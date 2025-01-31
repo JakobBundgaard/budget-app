@@ -169,3 +169,19 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+# PostgreSQL dumpfiler
+*.dump
+*.sql
+
+# Django migrations (hvis du ikke vil versionstyre dem fra start)
+*/migrations/*.py
+*/migrations/*.pyc
+!*/migrations/__init__.py
+
+# Gunicorn logs (hvis du kører en server med Gunicorn)
+gunicorn.log
+
+# Static & media files (hvis du genererer dem under deployment)
+staticfiles/
+media/
