@@ -1,6 +1,6 @@
 from decimal import Decimal
 from django.db import models
-import django.apps
+import django.apps  # Lazy import for at undgå cirkulære imports
 
 
 class SalaryCalculator:
@@ -21,7 +21,7 @@ class SalaryCalculator:
 
     def save_salary(self):
         """ Gem lønnen i databasen """
-        Salary = django.apps.apps.get_model('core', 'Salary')
+        Salary = django.apps.apps.get_model('core', 'Salary')  # Lazy import
         net_income = self.calculate_net_income()
         salary = Salary.objects.create(
             gross_income=self.gross_income,
@@ -33,6 +33,7 @@ class SalaryCalculator:
         )
         return salary
 
+
 class BudgetManager:
     """ Klasse til at styre budgettering """
 
@@ -41,7 +42,7 @@ class BudgetManager:
 
     def get_total_budget(self):
         """ Returnerer summen af alle budgetposter tilknyttet en given løn """
-        Budget = django.apps.apps.get_model('core', 'Budget')
+        Budget = django.apps.apps.get_model('core', 'Budget')  # Lazy import
         return Budget.objects.filter(salary=self.salary).aggregate(total=models.Sum('amount'))['total'] or Decimal(0)
 
     def can_add_budget(self, amount):
@@ -52,7 +53,7 @@ class BudgetManager:
 
     def add_budget(self, category, amount):
         """ Tilføjer en ny budgetpost, hvis den ikke overstiger nettolønnen """
-        Budget = django.apps.apps.get_model('core', 'Budget')
+        Budget = django.apps.apps.get_model('core', 'Budget')  # Lazy import
         if self.can_add_budget(amount):
             budget = Budget.objects.create(salary=self.salary, category=category, amount=amount)
             return budget
