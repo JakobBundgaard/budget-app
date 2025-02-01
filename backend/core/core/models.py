@@ -1,5 +1,6 @@
 from django.db import models
 import django.apps  # Lazy import for at undgå cirkulære imports
+from .services import SalaryCalculator
 
 
 class Salary(models.Model):
@@ -12,7 +13,7 @@ class Salary(models.Model):
 
     def save(self, *args, **kwargs):
         """ Brug SalaryCalculator fra services.py via lazy import """
-        SalaryCalculator = django.apps.apps.get_model('core', 'SalaryCalculator')  # Lazy import
+        
         calculator = SalaryCalculator(self.gross_income, self.tax_percentage, self.deductions)
 
         self.am_contribution = calculator.gross_income * SalaryCalculator.AM_RATE
@@ -26,7 +27,7 @@ class Salary(models.Model):
 
 
 class Budget(models.Model):
-    salary = models.ForeignKey(Salary, on_delete=models.CASCADE)
+    salary = models.ForeignKey(Salary, on_delete=models.PROTECT)
     category = models.CharField(max_length=255)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
 
