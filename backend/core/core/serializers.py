@@ -17,3 +17,8 @@ class BudgetSerializer(serializers.ModelSerializer):
     class Meta:
         model = Budget
         fields = '__all__'  # Inkluderer alle felter i JSON-responsen
+        extra_kwargs = {
+            'category': {'required': False},
+            'amount': {'required': False},
+            'salary': {'required': False},
+        }
