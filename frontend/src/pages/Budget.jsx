@@ -1,5 +1,9 @@
 const Budget = () => {
-    return <h2>Welcome to the Budget page!</h2>;
+  return (
+    <div className="flex flex-col items-center">
+        <h1 className="text-2xl mb-4">Budget Page</h1> 
+    </div>
+)
   };
   
   export default Budget;

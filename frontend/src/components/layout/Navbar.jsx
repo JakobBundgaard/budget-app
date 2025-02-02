@@ -8,7 +8,7 @@ const links = [
 ];
 
 const NavBar = () => (
-  <nav className="flex justify-center bg-sky-300 p-4 space-x-6 sticky top-0 shadow-md">
+  <nav className="flex justify-center bg-sky-300 p-4 space-x-12 sticky top-0 shadow-md">
     {links.map(({ to, label }) => (
       <NavLink
         key={to}
